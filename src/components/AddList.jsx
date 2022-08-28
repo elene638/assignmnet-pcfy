@@ -11,7 +11,8 @@ function AddList() {
   const [selectPosition, setSelectPosition] = useState(false);
   const [team, setTeam] = useState("თიმი");
   const [isDesktop, setDesktop] = useState(window.innerWidth < 670);
-
+  //const [desktop, setdesktop] = useState(window.innerWidth)
+  console.log(window.innerWidth);
   const updateMedia = () => {
     setDesktop(window.innerWidth < 670);
   };
