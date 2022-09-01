@@ -5,10 +5,10 @@ import computerDesktop from "../images/home-picture-desktop.png";
 import { Link } from "react-router-dom";
 
 function Home() {
-  const [isDesktop, setDesktop] = useState(window.innerWidth < 670);
+  const [isDesktop, setDesktop] = useState(window.outerWidth);
 
   const updateMedia = () => {
-    setDesktop(window.innerWidth < 670);
+    setDesktop(window.outerWidth);
   };
 
   useEffect(() => {
@@ -22,11 +22,10 @@ function Home() {
         <img alt="logo" className="logo-picture" src={logo} />
       </div>
       <div className="picture">
-        {/* <img className="computer-picture" alt="pic" src={computer} /> */}
         <img
-          className="computer-picture"
+          className={isDesktop < 670 ? "computer-picture " : "computer"}
           alt="pic"
-          src={isDesktop ? computer : computerDesktop}
+          src={isDesktop < 670 ? computer : computerDesktop}
         />
       </div>
 
