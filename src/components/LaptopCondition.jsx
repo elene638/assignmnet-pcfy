@@ -4,9 +4,9 @@ import errorIcon from "../images/warning-icon.png";
 function LaptopCondition({ formListData, handleChange, formDataError }) {
   return (
     <div>
-      <label className={formDataError.laptopCondition && "error-hint"}>
+      <label className={formDataError.laptop_state && "error-hint"}>
         ლეპტოპის მდგომარეობა
-        {formDataError.laptopCondition && (
+        {formDataError.laptop_state && (
           <img alt="error" src={errorIcon} className="error-icon" />
         )}
       </label>
@@ -16,8 +16,8 @@ function LaptopCondition({ formListData, handleChange, formDataError }) {
             className="radio"
             type="radio"
             id="new"
-            name="laptopCondition"
-            checked={formListData.laptopCondition === "new"}
+            name="laptop_state"
+            checked={formListData.laptop_state === "new"}
             value="new"
             onChange={handleChange}
           />
@@ -28,8 +28,8 @@ function LaptopCondition({ formListData, handleChange, formDataError }) {
             className="radio"
             type="radio"
             id="old"
-            name="laptopCondition"
-            checked={formListData.laptopCondition === "old"}
+            name="laptop_state"
+            checked={formListData.laptop_state === "old"}
             value="old"
             onChange={handleChange}
           />

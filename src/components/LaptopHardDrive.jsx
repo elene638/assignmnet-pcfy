@@ -4,9 +4,9 @@ import errorIcon from "../images/warning-icon.png";
 function LaptopHardDrive({ formListData, handleChange, formDataError }) {
   return (
     <div>
-      <label className={formDataError.memory && "error-hint"}>
+      <label className={formDataError.laptop_hard_drive_type && "error-hint"}>
         მეხსიერების ტიპი
-        {formDataError.memory && (
+        {formDataError.laptop_hard_drive_type && (
           <img alt="error" src={errorIcon} className="error-icon" />
         )}
       </label>
@@ -16,8 +16,8 @@ function LaptopHardDrive({ formListData, handleChange, formDataError }) {
             className="radio"
             type="radio"
             id="ssd"
-            name="memory"
-            checked={formListData.memory === "ssd"}
+            name="laptop_hard_drive_type"
+            checked={formListData.laptop_hard_drive_type === "ssd"}
             value="ssd"
             onChange={handleChange}
           />
@@ -28,8 +28,8 @@ function LaptopHardDrive({ formListData, handleChange, formDataError }) {
             className="radio"
             type="radio"
             id="hdd"
-            name="memory"
-            checked={formListData.memory === "hdd"}
+            name="laptop_hard_drive_type"
+            checked={formListData.laptop_hard_drive_type === "hdd"}
             value="hdd"
             onChange={handleChange}
           />

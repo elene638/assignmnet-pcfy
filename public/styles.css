@@ -4,6 +4,7 @@
 @font-face {
   font-family: HelveticaNeue;
   src: url("./fonts/HelveticaNeue.ttc");
+  font-style: normal;
 }
 body {
   margin: 0;
@@ -13,6 +14,7 @@ body {
 input {
   border: 1.8px solid #8ac0e2;
   outline: none;
+  color: #000000;
 }
 
 input:focus {
@@ -38,9 +40,43 @@ input:hover::placeholder {
   color: #e52f2f;
 }
 
-.picture-error {
-  border-color: #e52f2f;
-  background-color: #e52f2f;
+.price input::placeholder {
+  /* width: 18px;
+  height: 21px; */
+  /* opacity: 0; */
+  /* padding-right: 500px; */
+  /* padding-left: 70px; */
+  float: right;
+  padding-top: 15px;
+}
+
+@media only screen and (max-width: 1920px) {
+  .picture-error {
+    border: 2px dashed #e52f2f;
+
+    background-color: #fff1f1;
+    height: 423px;
+    width: 878px;
+    left: 174px;
+    top: 68px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.picture-error-phone {
+  border: 2px dashed #e52f2f;
+
+  background-color: #fff1f1;
+  border-radius: 8px;
+  height: 244px;
+  width: 358px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 948px;
 }
 
 .error-hint {
@@ -51,6 +87,46 @@ input:hover::placeholder {
   height: 20px;
   width: 22px;
   margin-left: 15px;
+}
+
+.price input::placeholder {
+  width: 18px;
+  height: 21px;
+  padding-left: 380px;
+}
+
+.checked-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 17px;
+}
+
+.checked-container span {
+  width: 187px;
+  height: 46px;
+  font-family: HelveticaNeue;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  background: #62a1eb;
+  border-radius: 8px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.bring-down-desktop {
+  position: absolute;
+  top: 555px;
+  left: 1200px;
+}
+
+@media only screen and (max-width: 1920px) {
+  .checked-container {
+    margin-top: 30px;
+  }
 }
 
 /* if without hint label is #000000 */
@@ -578,8 +654,18 @@ input[type="file"] {
   /* opacity: 0; */
   position: absolute;
   width: 187px;
-  top: 400;
+  margin-top: 100px;
   /* z-index: 1; */
+  align-self: center;
+}
+
+.bring-down {
+  position: absolute;
+  /* top: 200px; */
+  opacity: 1;
+  /* opacity: 0; */
+  top: 255px;
+  left: 780px;
 }
 
 .photo-label {
@@ -708,6 +794,10 @@ input[type="file"] {
   margin-top: 63px;
 }
 
+.first-part {
+  margin-top: 41px;
+}
+
 @media only screen and (min-width: 1920px) {
   .desktop-list-form {
     flex-direction: column;
@@ -760,7 +850,7 @@ input[type="file"] {
     color: #ffffff;
     background: #62a1eb;
     border-radius: 8px;
-    z-index: 2;
+    /* z-index: 2; */
   }
 
   .photo-label {
@@ -782,6 +872,7 @@ input[type="file"] {
     justify-content: space-between;
     align-content: center;
     margin-bottom: 83px;
+    margin-top: 0px;
   }
 
   .laptop-name {
@@ -1028,5 +1119,288 @@ input[type="file"] {
   .success-logo {
     height: 218px;
     width: 137px;
+  }
+}
+
+/* Laptop list */
+
+.main-laptop-list {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.laptop-list p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  color: #232323;
+  margin-right: 430px;
+  margin-top: 31px;
+  margin-bottom: 33px;
+}
+
+.laptop-container {
+  align-self: center;
+}
+
+.see-laptop {
+  height: 123px;
+  background: #eafaff;
+  border: 1px solid #aed1ea;
+  border-radius: 10px;
+  width: 358px;
+  margin-bottom: 26px;
+}
+
+.see-laptop {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.laptop {
+  margin: 7px 16px 7px 7px;
+  border-radius: 6px;
+  width: 164px;
+  height: 109px;
+}
+
+.description {
+  margin-right: 32px;
+}
+
+.description p {
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.another-one {
+  margin-bottom: 11px;
+}
+
+.see-more {
+  color: #4386a9;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  background-color: transparent;
+  border-width: 0px 0px 1px 0px;
+  border-color: #4386a9;
+  padding: 0px;
+}
+
+@media only screen and (min-width: 1920px) {
+  .main-laptop-list {
+    margin-top: 79px;
+  }
+
+  header {
+    margin-bottom: 97px;
+  }
+
+  .laptop-list {
+    margin-right: 400px;
+  }
+
+  .laptop-list p {
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 21px;
+
+    color: #000000;
+  }
+
+  .arrow-btn {
+    margin-left: 70px;
+  }
+
+  .see-laptop {
+    margin-bottom: 0px;
+    width: 563px;
+    height: 205px;
+    background: #eafaff;
+    border: 1px solid #aed1ea;
+    border-radius: 20px;
+  }
+
+  .laptop {
+    height: 178px;
+    width: 266px;
+    border-radius: 10px;
+  }
+
+  .description p {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #2e2e2e;
+  }
+
+  .another-one {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #2e2e2e;
+  }
+
+  .laptop-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .see-more {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #4386a9;
+  }
+}
+
+/* each laptop */
+
+.main-laptop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.laptop-information {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.laptop-information img {
+  height: 191px;
+  width: 358px;
+  margin: 84px 16px 0px 16px;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-top: 29px;
+}
+
+.details {
+  /* display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.details h3 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 178%;
+  color: #2e2e2e;
+}
+
+.details p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 25px;
+  color: #797979;
+}
+
+.eachlaptop-hr {
+  border: 1px solid #a5a5a5;
+  width: 500px;
+  margin: 23px 0px;
+}
+
+@media only screen and (min-width: 1920px) {
+  .main-laptop {
+    margin-bottom: 99px;
+  }
+
+  .eachlaptop-header {
+    margin-top: 76px;
+    margin-bottom: 84px;
+  }
+  .information-desktop {
+    display: flex;
+    flex-direction: row;
+    width: 1178px;
+  }
+
+  .laptop-information {
+    width: 577px;
+    height: 342px;
+    padding-bottom: 150px;
+  }
+
+  .details-desktop {
+    width: 577px;
+    height: 342px;
+  }
+
+  .eachlaptop-hr {
+    width: 1178px;
+  }
+
+  .information {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1178px;
+  }
+
+  .information-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 515px;
+  }
+
+  .information-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 494px;
+  }
+
+  .details h3 {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: #2e2e2e;
+  }
+
+  .details p {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    color: #797979;
+  }
+
+  .third-part-information {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .information-three {
+    width: 399px;
+  }
+
+  .details-desk {
+    width: 368px;
   }
 }

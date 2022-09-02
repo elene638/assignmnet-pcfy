@@ -4,7 +4,7 @@ import camera from "../images/camera.png";
 import footerLogo from "../images/footer-logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { index } from "../store/indexSlice";
-import { parseValue } from "graphql";
+import checked from "../images/accept-icon.png";
 import CpuDropdown from "./CpuDropdown";
 import BrandDropdown from "./BrandDropdown";
 import LaptopCondition from "./LaptopCondition";
@@ -24,24 +24,24 @@ function List() {
   const [img, setImg] = useState();
   const dispatch = useDispatch();
   const [formListData, setFormListData] = useState({
-    picture: null,
-    laptopName: "",
-    brand: "",
-    cpu: "",
-    cpuCore: "",
-    cpuFlow: "",
-    ram: "",
-    memory: "",
-    date: "",
-    price: "",
-    laptopCondition: "",
+    laptop_image: null,
+    laptop_name: "",
+    laptop_brand_id: "",
+    laptop_cpu: "",
+    laptop_cpu_cores: "",
+    laptop_cpu_threads: "",
+    laptop_ram: "",
+    laptop_hard_drive_type: "",
+    laptop_purchase_date: "",
+    laptop_price: "",
+    laptop_state: "",
   });
   const [formDataError, setFormDataError] = useState({});
+  //const isValidEmail = formListData.checkValidity();
 
-  // useEffect(() => {
-  //   setFormListData(JSON.parse(localStorage.getItem("formListData")));
-  //   //localStorage.setItem("formListData", JSON.stringify(formListData));
-  // }, []);
+  useEffect(() => {
+    //setFormListData(JSON.parse(localStorage.getItem("formListData")));
+  }, []);
 
   //console.log(formData.picture);
   const updateMedia = () => {
@@ -91,7 +91,7 @@ function List() {
         setFormListData((prevValues) => {
           return {
             ...prevValues,
-            picture: event.target.result,
+            laptop_image: event.target.result,
           };
         });
       };
@@ -107,14 +107,31 @@ function List() {
     event.preventDefault();
     //navigate("/success");
     setFormDataError(validate(formListData));
+    // if (isValidEmail) {
+    //   console.log("dcd");
+    // }
     localStorage.setItem("formListData", JSON.stringify(formListData));
+
+    //const token = "e113a24d23bb6c990b531705e476123f";
+    const headers = {
+      "Content-Type": "application/json",
+      redirect: "follow",
+    };
+
+    fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(formListData),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   }
 
   function handleCpu(name, id) {
     setFormListData((prevValues) => {
       return {
         ...prevValues,
-        cpu: id,
+        laptop_cpu: id,
       };
     });
     setCpu(name);
@@ -126,7 +143,7 @@ function List() {
     setFormListData((prevValues) => {
       return {
         ...prevValues,
-        brand: id,
+        laptop_brand_id: id,
       };
     });
   }
@@ -151,51 +168,51 @@ function List() {
     />
   ));
 
+  //^(\+\d[995])\d{9}?
+
   const validate = (values) => {
     const errors = {};
     const regexAlphabet = /^[a-zA-Z\s.,]+$/;
     const numbers = /^[0-9]*$/;
-    if (!values.laptopName) {
-      errors.laptopName = "needed";
-    } else if (!regexAlphabet.test(values.laptopName)) {
-      errors.laptopName = "ingeorgian";
-    } else if (values.name.length < 2) {
-      errors.name = "small";
+    if (!values.laptop_name) {
+      errors.laptop_name = "needed";
+    } else if (!regexAlphabet.test(values.laptop_name)) {
+      errors.laptop_name = "ingeorgian";
     }
-    if (!values.brand) {
-      errors.brand = "needed";
+    if (!values.laptop_brand_id) {
+      errors.laptop_brand_id = "needed";
     }
-    if (!values.cpu) {
-      errors.cpu = "needed";
+    if (!values.laptop_cpu) {
+      errors.laptop_cpu = "needed";
     }
-    if (!values.cpuCore) {
-      errors.cpuCore = "needed";
-    } else if (!numbers.test(values.cpuCore)) {
-      errors.cpuCore = "in numbers";
+    if (!values.laptop_cpu_cores) {
+      errors.laptop_cpu_cores = "needed";
+    } else if (!numbers.test(values.laptop_cpu_cores)) {
+      errors.laptop_cpu_cores = "in numbers";
     }
-    if (!values.cpuFlow) {
-      errors.cpuFlow = "needed";
-    } else if (!numbers.test(values.cpuFlow)) {
-      errors.cpuFlow = "in numbers";
+    if (!values.laptop_cpu_threads) {
+      errors.laptop_cpu_threads = "needed";
+    } else if (!numbers.test(values.laptop_cpu_threads)) {
+      errors.laptop_cpu_threads = "in numbers";
     }
-    if (!values.ram) {
-      errors.ram = "needed";
-    } else if (!numbers.test(values.ram)) {
-      errors.ram = "in numbers";
+    if (!values.laptop_ram) {
+      errors.laptop_ram = "needed";
+    } else if (!numbers.test(values.laptop_ram)) {
+      errors.laptop_ram = "in numbers";
     }
-    if (!values.memory) {
-      errors.memory = "needed";
+    if (!values.laptop_hard_drive_type) {
+      errors.laptop_hard_drive_type = "needed";
     }
-    if (!values.price) {
-      errors.price = "needed";
-    } else if (!numbers.test(values.price)) {
-      errors.price = "in numbers";
+    if (!values.laptop_price) {
+      errors.laptop_price = "needed";
+    } else if (!numbers.test(values.laptop_price)) {
+      errors.laptop_price = "in numbers";
     }
-    if (!values.laptopCondition) {
-      errors.laptopCondition = "needed";
+    if (!values.laptop_state) {
+      errors.laptop_state = "needed";
     }
-    if (!values.picture) {
-      errors.picture = "needed";
+    if (!values.laptop_image) {
+      errors.laptop_image = "needed";
     }
     return errors;
   };
@@ -243,13 +260,19 @@ function List() {
               <section>
                 <div className={isDesktop < 670 ? "list-form" : null}>
                   {isDesktop < 670 ? (
-                    <div className="choose-file-container">
+                    <div
+                      className={
+                        formDataError.laptop_image
+                          ? "picture-error"
+                          : "choose-file-container"
+                      }
+                    >
                       <label htmlFor="file" className="photo-label">
                         <img alt="camera" src={camera} className="photo" />
                         <p className="phone-size-text">
                           ლეპტოპის <br /> ფოტოს ატვირთვა
                         </p>
-                        {formDataError.picture && (
+                        {formDataError.laptop_image && (
                           <img
                             alt="errorIcon"
                             src={errorIcon}
@@ -260,31 +283,57 @@ function List() {
 
                       <input
                         type="file"
-                        name="picture"
-                        className="inputfile"
+                        name="laptop_image"
+                        className={img && "bring-down"}
                         accept="image/*"
-                        // value={formData.picture}
+                        onChange={handleChange}
                       />
+                      {img && (
+                        <img
+                          alt="d"
+                          src={img}
+                          style={{
+                            width: 948,
+                            height: 244,
+                            zIndex: 3,
+                            position: "absolute",
+                            borderRadius: 8,
+                          }}
+                        />
+                      )}
                     </div>
                   ) : (
                     <div
                       className={
-                        formDataError.picture
-                          ? "picture-error choose-file-container"
+                        formDataError.laptop_image
+                          ? "picture-error"
                           : "choose-file-container"
                       }
                     >
-                      <label htmlFor="file" className="photo-label">
-                        <p>ჩააგდე ან ატვირთე ლეპტოპის ფოტო</p>
-
-                        <button className="upload-file">ატვირთე</button>
+                      {formDataError.laptop_image && (
+                        <img
+                          alt="pic"
+                          src={errorIcon}
+                          style={{ width: 38, height: 34, marginTop: 54 }}
+                        />
+                      )}
+                      <label
+                        htmlFor="file"
+                        className="photo-label"
+                        style={{ marginTop: 130 }}
+                      >
+                        <p style={{ marginBottom: 30 }}>
+                          ჩააგდე ან ატვირთე <br /> ლეპტოპის ფოტო
+                        </p>
                         <input
                           type="file"
-                          name="picture"
+                          name="laptop_image"
                           accept="image/*"
                           //value={formData.picture}
                           onChange={handleChange}
+                          className={img && "bring-down-desktop"}
                         />
+                        <span className="upload-file">ატვირთე</span>
                       </label>
 
                       {img && (
@@ -296,36 +345,51 @@ function List() {
                             height: 460,
                             zIndex: 3,
                             position: "absolute",
+                            borderRadius: 18,
                           }}
                         />
                       )}
                     </div>
                   )}
                 </div>
+                {img && (
+                  <div className="checked-container">
+                    <img
+                      alt="checked"
+                      src={checked}
+                      style={{ width: 22, height: 22 }}
+                    />
+                    <span>თავიდან ატვირთე</span>
+                  </div>
+                )}
                 <div className="first-part">
                   <div className="laptop-name">
                     <label
-                      className={formDataError.laptopName ? "error-hint" : null}
+                      className={
+                        formDataError.laptop_name ? "error-hint" : null
+                      }
                     >
                       ლეპტოპის სახელი
                     </label>
                     <input
                       type="text"
-                      name="laptopName"
+                      name="laptop_name"
                       placeholder="HP"
-                      value={formListData.laptopName}
+                      value={formListData.laptop_name}
                       onChange={handleChange}
-                      className={formDataError.laptopName ? "error" : null}
+                      className={formDataError.laptop_name ? "error" : null}
                     />
                     <p
-                      className={formDataError.laptopName ? "error-hint" : null}
+                      className={
+                        formDataError.laptop_name ? "error-hint" : null
+                      }
                     >
                       ლათინური ასოები, ციფრები, !@#$%^&*()_+={" "}
                     </p>
                   </div>
                   <div
                     className={
-                      formDataError.brand
+                      formDataError.laptop_brand_id
                         ? "first-dropdown dropdown error"
                         : "first-dropdown dropdown"
                     }
@@ -352,7 +416,7 @@ function List() {
                     <div
                       //className="second-dropdown dropdown"
                       className={
-                        formDataError.cpu
+                        formDataError.laptop_cpu
                           ? "second-dropdown dropdown error"
                           : "second-dropdown dropdown"
                       }
@@ -369,22 +433,24 @@ function List() {
                     <div className="cpu-first">
                       <label
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_cpu_cores ? "error-hint" : null
                         }
                       >
                         CPU-ს ბირთვი
                       </label>
                       <input
                         type="text"
-                        name="cpuCore"
+                        name="laptop_cpu_cores"
                         placeholder="14"
-                        value={formListData.cpuCore}
+                        value={formListData.laptop_cpu_cores}
                         onChange={handleChange}
-                        className={formDataError.cpuCore ? "error" : null}
+                        className={
+                          formDataError.laptop_cpu_cores ? "error" : null
+                        }
                       />
                       <p
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_cpu_cores ? "error-hint" : null
                         }
                       >
                         მხოლოდ ციფრები
@@ -393,22 +459,24 @@ function List() {
                     <div className="cpu-second">
                       <label
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_cpu_threads ? "error-hint" : null
                         }
                       >
                         CPU-ს ნაკადი
                       </label>
                       <input
                         type="text"
-                        name="cpuFlow"
+                        name="laptop_cpu_threads"
                         placeholder="365"
-                        value={formListData.cpuFlow}
+                        value={formListData.laptop_cpu_threads}
                         onChange={handleChange}
-                        className={formDataError.cpuFlow ? "error" : null}
+                        className={
+                          formDataError.laptop_cpu_threads ? "error" : null
+                        }
                       />
                       <p
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_cpu_threads ? "error-hint" : null
                         }
                       >
                         მხოლოდ ციფრები
@@ -419,22 +487,22 @@ function List() {
                     <div className="laptop-ram">
                       <label
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_ram ? "error-hint" : null
                         }
                       >
                         ლეპტოპის RAM(GB)
                       </label>
                       <input
                         type="text"
-                        name="ram"
+                        name="laptop_ram"
                         placeholder="16"
-                        value={formListData.ram}
+                        value={formListData.laptop_ram}
                         onChange={handleChange}
-                        className={formDataError.ram ? "error" : null}
+                        className={formDataError.laptop_ram ? "error" : null}
                       />
                       <p
                         className={
-                          formDataError.laptopName ? "error-hint" : null
+                          formDataError.laptop_ram ? "error-hint" : null
                         }
                       >
                         მხოლოდ ციფრები
@@ -461,7 +529,7 @@ function List() {
                     <label>შეძენის რიცხვი (არჩევითი)</label>
                     <input
                       type="date"
-                      name="begin"
+                      name="laptop_purchase_date"
                       placeholder="MM-DD-YYYY"
                       // value=""
                       // min="1997-01-01"
@@ -470,19 +538,24 @@ function List() {
                   </div>
                   <div className="price">
                     <label
-                      className={formDataError.laptopName ? "error-hint" : null}
+                      className={
+                        formDataError.laptop_price ? "error-hint" : null
+                      }
                     >
                       ლეპტოპის ფასი
                     </label>
                     <input
                       type="text"
-                      name="price"
-                      value={formListData.price}
+                      name="laptop_price"
+                      value={formListData.laptop_price}
                       onChange={handleChange}
-                      className={formDataError.price ? "error" : null}
+                      className={formDataError.laptop_price ? "error" : null}
+                      placeholder="₾"
                     />
                     <p
-                      className={formDataError.laptopName ? "error-hint" : null}
+                      className={
+                        formDataError.laptop_price ? "error-hint" : null
+                      }
                     >
                       მხოლოდ ციფრები
                     </p>
@@ -508,7 +581,9 @@ function List() {
                     უკან
                   </button>
                   {/* onClick={() => navigate("/success")} */}
-                  <button className="save">დამახსოვრება</button>
+                  <button type="submit" className="save">
+                    დამახსოვრება
+                  </button>
                 </div>
               </section>
             </div>

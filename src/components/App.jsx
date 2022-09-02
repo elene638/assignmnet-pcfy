@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import AddList from "./AddList";
 import List from "./List";
 import Success from "./Success";
+import LaptopList from "./LaptopList";
+import EachLaptop from "./EachLaptop";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <Route path="/addList" element={<AddList />} />
       <Route path="/list" element={<List />} />
       <Route path="/success" element={<Success />} />
+      <Route path="/laptopList" element={<LaptopList />} />
+      <Route path="/eachLaptop" element={<EachLaptop />} />
     </Routes>
   );
 }
