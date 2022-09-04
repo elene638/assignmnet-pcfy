@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import footerLogo from "../images/footer-logo.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import TeamDropdown from "./TeamDropdown";
 import PositionDropdown from "./PositionDropdown";
 

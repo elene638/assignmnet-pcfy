@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import camera from "../images/camera.png";
 import footerLogo from "../images/footer-logo.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import checked from "../images/accept-icon.png";
 import CpuDropdown from "./CpuDropdown";
 import BrandDropdown from "./BrandDropdown";
