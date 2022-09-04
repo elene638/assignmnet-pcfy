@@ -395,15 +395,17 @@ function List() {
                         src={checked}
                         style={{ width: 22, height: 22 }}
                       />
-                      <p className="image-name">
-                        {formListData.laptop_image.name},
-                      </p>
-                      <p className="image-size">
-                        {formListData.laptop_image.size}
-                      </p>
+                      <div className="image-content">
+                        <p className="image-name">
+                          {formListData.laptop_image.name},
+                        </p>
+                        <p className="image-size">
+                          {formListData.laptop_image.size}
+                        </p>
+                      </div>
                     </div>
 
-                    <span className="span">თავიდან ატვირთე</span>
+                    <button className="span">თავიდან ატვირთე</button>
                   </div>
                 )}
                 <div className="first-part">
