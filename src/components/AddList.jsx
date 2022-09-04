@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import footerLogo from "../images/footer-logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import TeamDropdown from "./TeamDropdown";
 import PositionDropdown from "./PositionDropdown";
-//import { addListSchema } from "../Validations/AddListValidation";
 
 function AddList() {
   const navigate = useNavigate();
@@ -26,19 +24,25 @@ function AddList() {
     phone_number: "",
   });
   const [formDataError, setFormDataError] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
 
-  //console.log(formData);
-
-  // useEffect(() => {
-  //   setFormData(JSON.parse(localStorage.getItem("formData")));
-  // }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("formData");
+    const teamData = localStorage.getItem("team");
+    const positionData = localStorage.getItem("position");
+    if (data) {
+      setFormData(JSON.parse(data));
+    }
+    if (teamData) {
+      setTeam(JSON.parse(teamData));
+    }
+    if (positionData) {
+      setPosition(JSON.parse(positionData));
+    }
+  }, []);
 
   const collegueIndexSelector = useSelector(
     (state) => state.index.collegueIndex
   );
-
-  const dispatch = useDispatch();
 
   const updateMedia = () => {
     setDesktop(window.outerWidth);
@@ -49,18 +53,13 @@ function AddList() {
     return () => window.removeEventListener("resize", updateMedia);
   }, [isDesktop]);
 
-  //Fetch teams
+  //Fetch teams and positions
 
   const fetchTeams = () => {
     fetch("https://pcfy.redberryinternship.ge/api/teams")
       .then((res) => res.json())
       .then((data) => setTeams(data.data));
   };
-  React.useEffect(() => {
-    fetchTeams();
-  }, []);
-
-  //Fetch postions
 
   const fetchPositions = () => {
     fetch("https://pcfy.redberryinternship.ge/api/positions")
@@ -68,6 +67,7 @@ function AddList() {
       .then((data) => setPositions(data.data));
   };
   React.useEffect(() => {
+    fetchTeams();
     fetchPositions();
   }, []);
 
@@ -79,80 +79,30 @@ function AddList() {
         [name]: value,
       };
     });
-    //localStorage.setItem("formData", JSON.stringify(formData));
-  }
-
-  //console.log(formData);
-  function handleSubmit(event) {
-    event.preventDefault();
-    //setFormDataError(validate(formData));
-    //setIsSubmit(true);
-    //navigate("/list");
 
     localStorage.setItem("formData", JSON.stringify(formData));
-
-    const token = "e113a24d23bb6c990b531705e476123f";
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: token,
-      redirect: "follow",
-    };
-
-    // axios
-    //   .post("https://pcfy.redberryinternship.ge/api/laptop/create", formData, {
-    //     headers: headers,
-    //   })
-    //   .then((response) => console.log(response));
-
-    console.log(JSON.stringify(formData));
-
-    fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
-    //var responseClone;
-    // fetch(
-    //   "https://pcfy.redberryinternship.ge/api/laptop/create",
-    //   requestOptions
-    // )
-    //   .then(function (response) {
-    //     responseClone = response.clone(); // 2
-    //     return response.json();
-    //   })
-    //   .then(
-    //     function (data) {
-    //       console.log(data);
-    //     },
-    //     function (rejectionReason) {
-    //       // 3
-    //       console.log(
-    //         "Error parsing JSON from response:",
-    //         rejectionReason,
-    //         responseClone
-    //       ); // 4
-    //       responseClone
-    //         .text() // 5
-    //         .then(function (bodyText) {
-    //           console.log(
-    //             "Received the following instead of valid JSON:",
-    //             bodyText
-    //           ); // 6
-    //         });
-    //     }
-    //   );
+    localStorage.setItem("team", JSON.stringify(team));
+    localStorage.setItem("position", JSON.stringify(position));
+    console.log(formData.name);
   }
 
-  //e113a24d23bb6c990b531705e476123f
+  function handleSubmit(event) {
+    event.preventDefault();
+    const errors = validate(formData);
+    setFormDataError(errors);
+    if (Object.keys(errors).length !== 0) {
+      return;
+    }
+
+    navigate("/list", {
+      state: { formData: formData },
+    });
+  }
 
   const validate = (values) => {
     const errors = {};
     const regexAlphabet = /^[ა-ჰ]+$/;
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regexEmail = /.*\@redberry.ge$/gm;
     const regexPhone = /^\+\995\d{9}?/g;
     if (!values.name) {
       errors.name = "needed";
@@ -233,8 +183,8 @@ function AddList() {
 
   return (
     <div className="desktop">
-      <main className={isDesktop < 670 ? "collegue-info" : null}>
-        <div className={isDesktop < 670 ? "header" : "desktop-header"}>
+      <main className={isDesktop < 1300 ? "collegue-info" : null}>
+        <div className={isDesktop < 1300 ? "header" : "desktop-header"}>
           <div className="arrow-btn">
             <button
               onClick={() => {
@@ -254,8 +204,16 @@ function AddList() {
             >
               თანამშრომლების ინფო
             </p>
-            {isDesktop > 670 && (
+            {isDesktop > 1300 && (
               <p
+                onClick={() => {
+                  const errors = validate(formData);
+                  setFormDataError(errors);
+                  if (Object.keys(errors).length !== 0) {
+                    return;
+                  }
+                  navigate("/list", { state: { formData: formData } });
+                }}
                 className={
                   collegueIndexSelector === "2" ? "active-text text" : "text"
                 }
@@ -263,7 +221,7 @@ function AddList() {
                 ლეპტოპის მახასიათებლები
               </p>
             )}
-            {isDesktop < 670 && (
+            {isDesktop < 1300 && (
               <p className="pages">{collegueIndexSelector}/2</p>
             )}
           </div>
@@ -307,7 +265,7 @@ function AddList() {
             </div>
             <div
               className={
-                formDataError.phone_number
+                formDataError.team_id
                   ? "error dropdown first"
                   : "dropdown first"
               }
@@ -323,7 +281,7 @@ function AddList() {
             </div>
             <div
               className={
-                formDataError.position
+                formDataError.position_id
                   ? "error dropdown second"
                   : "dropdown second"
               }
@@ -355,7 +313,7 @@ function AddList() {
             >
               უნდა მთავრდებოდეს @redberry.ge-თი
             </p>
-            <label className={formDataError.email && "error-hint"}>
+            <label className={formDataError.phone_number && "error-hint"}>
               ტელეფონის ნომერი
             </label>
             <input
@@ -368,21 +326,21 @@ function AddList() {
             />
             <p
               className={
-                formDataError.email
+                formDataError.phone_number
                   ? "error-hint phone-validation"
                   : "phone-validation"
               }
             >
               ქართული მობ-ნომერის ფორმატი
             </p>
-            {/* <Link to="/list"></Link> */}
+
             <button type="submit" className="next-page">
               შემდეგი
             </button>
           </form>
         </div>
         <div className="footer-logo-container">
-          {isDesktop > 670 && (
+          {isDesktop > 1300 && (
             <img className="footer-logo" alt="footer-logo" src={footerLogo} />
           )}
         </div>
@@ -392,21 +350,3 @@ function AddList() {
 }
 
 export default AddList;
-
-//const config = { headers: { Authorization: token } };
-// const passedValue = {
-//   key: formData,
-// };
-// axios
-//   .post("https://pcfy.redberryinternship.ge/api/laptop/create", formData, {
-//     headers: {
-//       Authorization: { token },
-//       "Content-Type": "application/json",
-//     },
-//   })
-//   .then((res) => {
-//     console.log(res.data);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });

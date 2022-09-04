@@ -5,16 +5,6 @@ import { useNavigate } from "react-router-dom";
 function Success() {
   const navigate = useNavigate();
 
-  const fetchPositions = () => {
-    fetch("https://pcfy.redberryinternship.ge/api/laptops").then((res) =>
-      console.log(res)
-    );
-    //.then((data) => console.log(data));
-  };
-  React.useEffect(() => {
-    fetchPositions();
-  }, []);
-
   return (
     <div className="success-main">
       <div className="success">

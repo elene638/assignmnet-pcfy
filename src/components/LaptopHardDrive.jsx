@@ -15,25 +15,25 @@ function LaptopHardDrive({ formListData, handleChange, formDataError }) {
           <input
             className="radio"
             type="radio"
-            id="ssd"
+            id="SSD"
             name="laptop_hard_drive_type"
-            checked={formListData.laptop_hard_drive_type === "ssd"}
-            value="ssd"
+            checked={formListData.laptop_hard_drive_type === "SSD"}
+            value="SSD"
             onChange={handleChange}
           />
-          <label htmlFor="ssd">SSD</label>
+          <label htmlFor="SSD">SSD</label>
         </div>
         <div className="hdd">
           <input
             className="radio"
             type="radio"
-            id="hdd"
+            id="HDD"
             name="laptop_hard_drive_type"
-            checked={formListData.laptop_hard_drive_type === "hdd"}
-            value="hdd"
+            checked={formListData.laptop_hard_drive_type === "HDD"}
+            value="HDD"
             onChange={handleChange}
           />
-          <label htmlFor="hdd">HDD</label>
+          <label htmlFor="HDD">HDD</label>
         </div>
       </div>
     </div>

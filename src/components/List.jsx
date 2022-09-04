@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import camera from "../images/camera.png";
 import footerLogo from "../images/footer-logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { index } from "../store/indexSlice";
 import checked from "../images/accept-icon.png";
 import CpuDropdown from "./CpuDropdown";
 import BrandDropdown from "./BrandDropdown";
@@ -22,9 +21,11 @@ function List() {
   const [isDesktop, setDesktop] = useState(window.outerWidth);
   const laptopIndexSelector = useSelector((state) => state.index.laptopIndex);
   const [img, setImg] = useState();
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const { formData } = location.state;
+
   const [formListData, setFormListData] = useState({
-    laptop_image: null,
+    laptop_image: "",
     laptop_name: "",
     laptop_brand_id: "",
     laptop_cpu: "",
@@ -35,15 +36,35 @@ function List() {
     laptop_purchase_date: "",
     laptop_price: "",
     laptop_state: "",
+    token: "722b8016d1dacb1a5e1d906de785c4f2",
+    name: formData.name,
+    surname: formData.surname,
+    team_id: formData.team_id,
+    position_id: formData.position_id,
+    email: formData.email,
+    phone_number: formData.phone_number,
   });
+
+  // console.log(formListData.laptop_image.size);
   const [formDataError, setFormDataError] = useState({});
-  //const isValidEmail = formListData.checkValidity();
 
   useEffect(() => {
-    //setFormListData(JSON.parse(localStorage.getItem("formListData")));
+    const data = localStorage.getItem("formListData");
+    const brandData = localStorage.getItem("brand");
+    const cpuData = localStorage.getItem("cpu");
+    if (data) {
+      setFormListData(JSON.parse(data));
+    }
+    if (brandData) {
+      setBrand(JSON.parse(brandData));
+    }
+    if (cpuData) {
+      setCpu(JSON.parse(cpuData));
+    }
   }, []);
 
-  //console.log(formData.picture);
+  // Control the resize
+
   const updateMedia = () => {
     setDesktop(window.outerWidth);
   };
@@ -53,14 +74,13 @@ function List() {
     return () => window.removeEventListener("resize", updateMedia);
   }, [isDesktop]);
 
+  // Fetch brands and cpus
+
   const fetchBrands = () => {
     fetch("https://pcfy.redberryinternship.ge/api/brands")
       .then((res) => res.json())
       .then((data) => setBrands(data.data));
   };
-  React.useEffect(() => {
-    fetchBrands();
-  }, []);
 
   const fetchcpu = () => {
     fetch("https://pcfy.redberryinternship.ge/api/cpus")
@@ -68,84 +88,82 @@ function List() {
       .then((data) => setCpus(data.data));
   };
   React.useEffect(() => {
+    fetchBrands();
     fetchcpu();
   }, []);
 
-  //console.log(formListData);
+  // Handle the image upload
+
+  function handleImageUpload(event) {
+    const { name, value, files } = event.target;
+    setFormListData((prevValues) => {
+      return {
+        ...prevValues,
+        laptop_image: event.target.files[0],
+      };
+    });
+    const file = event.target.files[0];
+
+    setImg(URL.createObjectURL(file));
+  }
+
+  // Handle change of inputs
 
   function handleChange(event) {
     const { name, value } = event.target;
-    // console.log(value);
+
     setFormListData((prevValues) => {
       return {
         ...prevValues,
         [name]: value,
       };
     });
-    const file = event.target.files[0];
-    setImg(URL.createObjectURL(file));
-    //localStorage.setItem("formListData", JSON.stringify(formListData));
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setFormListData((prevValues) => {
-          return {
-            ...prevValues,
-            laptop_image: event.target.result,
-          };
-        });
-      };
-      reader.onerror = (err) => {
-        reject(err);
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-  //console.log(formListData);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    //navigate("/success");
-    setFormDataError(validate(formListData));
-    // if (isValidEmail) {
-    //   console.log("dcd");
-    // }
     localStorage.setItem("formListData", JSON.stringify(formListData));
+    localStorage.setItem("brand", JSON.stringify(brand));
+    localStorage.setItem("cpu", JSON.stringify(cpu));
+  }
 
-    //const token = "e113a24d23bb6c990b531705e476123f";
-    const headers = {
-      "Content-Type": "application/json",
-      redirect: "follow",
-    };
+  //Handle submition
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const errors = validate(formListData);
+    setFormDataError(errors);
+    if (Object.keys(errors).length !== 0) {
+      return;
+    }
+
+    navigate("/success");
+    localStorage.clear();
+
+    const data = new FormData();
+
+    for (let prop in formListData) {
+      data.append(prop, formListData[prop]);
+    }
 
     fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
       method: "POST",
-      headers: headers,
-      body: JSON.stringify(formListData),
+
+      body: data,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   }
+
+  // Handle cpu
 
   function handleCpu(name, id) {
     setFormListData((prevValues) => {
       return {
         ...prevValues,
-        laptop_cpu: id,
+        laptop_cpu: name,
       };
     });
     setCpu(name);
-  }
-
-  function handleBrand(name, id) {
-    setBrand(name);
-    console.log(name, id);
-    setFormListData((prevValues) => {
-      return {
-        ...prevValues,
-        laptop_brand_id: id,
-      };
-    });
   }
 
   const eachCpu = cpus.map((cpu, index) => (
@@ -158,6 +176,19 @@ function List() {
     />
   ));
 
+  // handle brand
+
+  function handleBrand(name, id) {
+    setBrand(name);
+
+    setFormListData((prevValues) => {
+      return {
+        ...prevValues,
+        laptop_brand_id: id,
+      };
+    });
+  }
+
   const eachBrand = brands.map((brand, index) => (
     <BrandDropdown
       key={index}
@@ -168,7 +199,7 @@ function List() {
     />
   ));
 
-  //^(\+\d[995])\d{9}?
+  // validation
 
   const validate = (values) => {
     const errors = {};
@@ -220,7 +251,7 @@ function List() {
   return (
     <div>
       <main className="main-list-desktop">
-        <div className={isDesktop < 670 ? "header" : "desktop-header"}>
+        <div className={isDesktop < 1300 ? "header" : "desktop-header"}>
           <div className="arrow-btn">
             <button
               onClick={() => {
@@ -232,8 +263,11 @@ function List() {
             </button>
           </div>
           <div className="collegues">
-            {isDesktop > 670 && (
+            {isDesktop > 1300 && (
               <p
+                onClick={() => {
+                  navigate("/addList");
+                }}
                 className={
                   laptopIndexSelector === "1" ? "active-text text" : "text"
                 }
@@ -249,7 +283,7 @@ function List() {
               ლეპტოპის მახასიათებლები
             </p>
 
-            {isDesktop < 670 && (
+            {isDesktop < 1300 && (
               <p className="pages">{laptopIndexSelector}/2</p>
             )}
           </div>
@@ -258,8 +292,8 @@ function List() {
           <div className="desktop-list-form">
             <div className="form form-list form-list-first">
               <section>
-                <div className={isDesktop < 670 ? "list-form" : null}>
-                  {isDesktop < 670 ? (
+                <div className={isDesktop < 1300 ? "list-form" : null}>
+                  {isDesktop < 1300 ? (
                     <div
                       className={
                         formDataError.laptop_image
@@ -286,18 +320,19 @@ function List() {
                         name="laptop_image"
                         className={img && "bring-down"}
                         accept="image/*"
-                        onChange={handleChange}
+                        onChange={handleImageUpload}
                       />
                       {img && (
                         <img
                           alt="d"
                           src={img}
                           style={{
-                            width: 948,
-                            height: 244,
+                            width: "100%",
+                            height: 250,
                             zIndex: 3,
                             position: "absolute",
                             borderRadius: 8,
+                            backgroundColor: "white",
                           }}
                         />
                       )}
@@ -329,8 +364,7 @@ function List() {
                           type="file"
                           name="laptop_image"
                           accept="image/*"
-                          //value={formData.picture}
-                          onChange={handleChange}
+                          onChange={handleImageUpload}
                           className={img && "bring-down-desktop"}
                         />
                         <span className="upload-file">ატვირთე</span>
@@ -346,6 +380,7 @@ function List() {
                             zIndex: 3,
                             position: "absolute",
                             borderRadius: 18,
+                            background: "white",
                           }}
                         />
                       )}
@@ -354,12 +389,21 @@ function List() {
                 </div>
                 {img && (
                   <div className="checked-container">
-                    <img
-                      alt="checked"
-                      src={checked}
-                      style={{ width: 22, height: 22 }}
-                    />
-                    <span>თავიდან ატვირთე</span>
+                    <div className="image-information">
+                      <img
+                        alt="checked"
+                        src={checked}
+                        style={{ width: 22, height: 22 }}
+                      />
+                      <p className="image-name">
+                        {formListData.laptop_image.name},
+                      </p>
+                      <p className="image-size">
+                        {formListData.laptop_image.size}
+                      </p>
+                    </div>
+
+                    <span className="span">თავიდან ატვირთე</span>
                   </div>
                 )}
                 <div className="first-part">
@@ -393,7 +437,6 @@ function List() {
                         ? "first-dropdown dropdown error"
                         : "first-dropdown dropdown"
                     }
-                    //className="first-dropdown dropdown"
                     onClick={() => setSelectBrand(!selectBrand)}
                   >
                     <div className="dropdown-btn">
@@ -408,13 +451,12 @@ function List() {
                 </div>
               </section>
             </div>
-            {isDesktop > 670 && <hr className="hr-one" />}
+            {isDesktop > 1300 && <hr className="hr-one" />}
             <div className="form form-list form-list-second">
               <section>
                 <div className="cpu">
                   <div className="cpu-info">
                     <div
-                      //className="second-dropdown dropdown"
                       className={
                         formDataError.laptop_cpu
                           ? "second-dropdown dropdown error"
@@ -521,19 +563,18 @@ function List() {
                 </div>
               </section>
             </div>
-            {isDesktop > 670 && <hr className="hr-two" />}
+            {isDesktop > 1300 && <hr className="hr-two" />}
             <div className="form form-list third-part">
               <section>
                 <div className="first-part">
                   <div className="date">
                     <label>შეძენის რიცხვი (არჩევითი)</label>
                     <input
-                      type="date"
+                      type="text"
                       name="laptop_purchase_date"
-                      placeholder="MM-DD-YYYY"
-                      // value=""
-                      // min="1997-01-01"
-                      // max="2030-12-31"
+                      placeholder="დდ / თთ / წწწწ"
+                      value={formListData.laptop_purchase_date}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="price">
@@ -580,7 +621,7 @@ function List() {
                   >
                     უკან
                   </button>
-                  {/* onClick={() => navigate("/success")} */}
+
                   <button type="submit" className="save">
                     დამახსოვრება
                   </button>
@@ -590,7 +631,7 @@ function List() {
           </div>
         </form>
         <div className="footer-logo-container-list">
-          {isDesktop > 670 && (
+          {isDesktop > 1300 && (
             <img className="footer-logo" alt="footer-logo" src={footerLogo} />
           )}
         </div>

@@ -23,9 +23,9 @@ function Home() {
       </div>
       <div className="picture">
         <img
-          className={isDesktop < 670 ? "computer-picture " : "computer"}
+          className={isDesktop < 1300 ? "computer-picture " : "computer"}
           alt="pic"
-          src={isDesktop < 670 ? computer : computerDesktop}
+          src={isDesktop < 1300 ? computer : computerDesktop}
         />
       </div>
 
@@ -33,7 +33,9 @@ function Home() {
         <Link to="/addList">
           <button className="btn-add">ჩანაწერების დამატება</button>
         </Link>
-        <button className="btn-show">ჩანაწერების სია</button>
+        <Link to="/laptopList">
+          <button className="btn-show">ჩანაწერების სია</button>
+        </Link>
       </div>
     </div>
   );

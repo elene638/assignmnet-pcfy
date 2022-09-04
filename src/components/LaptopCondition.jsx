@@ -27,13 +27,13 @@ function LaptopCondition({ formListData, handleChange, formDataError }) {
           <input
             className="radio"
             type="radio"
-            id="old"
+            id="used"
             name="laptop_state"
-            checked={formListData.laptop_state === "old"}
-            value="old"
+            checked={formListData.laptop_state === "used"}
+            value="used"
             onChange={handleChange}
           />
-          <label htmlFor="old">მეორადი</label>
+          <label htmlFor="used">მეორადი</label>
         </div>
       </div>
     </div>
