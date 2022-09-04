@@ -1398,6 +1398,11 @@ header {
 
 /* each laptop */
 
+.eachlaptop-container {
+  width: 550px;
+  margin: auto;
+}
+
 .main-laptop {
   display: flex;
   flex-direction: column;
@@ -1419,7 +1424,9 @@ header {
 .information {
   display: flex;
   flex-direction: column;
-  width: 358px;
+  /* width: 358px; */
+  width: 450px;
+  margin-left: 25px;
   margin-top: 29px;
 }
 
@@ -1447,7 +1454,8 @@ header {
 
 .eachlaptop-hr {
   border: 1px solid #a5a5a5;
-  width: 358px;
+  /* width: 358px; */
+  width: 450px;
   margin: 23px 0px;
 }
 

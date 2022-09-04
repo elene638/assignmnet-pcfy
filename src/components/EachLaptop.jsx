@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -8,10 +8,20 @@ function EachLaptop() {
   const [team, setTeam] = useState();
   const [position, setPosition] = useState();
   const [brand, setBrands] = useState();
+  const [isDesktop, setDesktop] = useState(window.outerWidth);
 
   const { eachLaptop } = location.state;
 
   console.log(team);
+
+  const updateMedia = () => {
+    setDesktop(window.outerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  }, [isDesktop]);
 
   //Fetch teams
 
@@ -58,7 +68,7 @@ function EachLaptop() {
   console.log("team", specificTeam);
 
   return (
-    <div>
+    <div className={isDesktop < 1000 ? "eachlaptop-container" : null}>
       <header className="eachlaptop-header">
         <div className="arrow-btn">
           <button
