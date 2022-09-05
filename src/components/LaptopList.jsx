@@ -49,11 +49,6 @@ function LaptopList() {
               />
             );
           })}
-
-        {/* <Laptop />
-        <Laptop />
-        <Laptop />
-        <Laptop /> */}
       </div>
     </div>
   );

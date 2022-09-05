@@ -45,7 +45,6 @@ function List() {
     phone_number: formData.phone_number,
   });
 
-  // console.log(formListData.laptop_image.size);
   const [formDataError, setFormDataError] = useState({});
 
   useEffect(() => {
@@ -146,7 +145,6 @@ function List() {
 
     fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
       method: "POST",
-
       body: data,
     })
       .then((res) => res.json())
@@ -297,7 +295,7 @@ function List() {
                     <div
                       className={
                         formDataError.laptop_image
-                          ? "picture-error"
+                          ? "picture-error-phone"
                           : "choose-file-container"
                       }
                     >
@@ -425,11 +423,7 @@ function List() {
                       onChange={handleChange}
                       className={formDataError.laptop_name ? "error" : null}
                     />
-                    <p
-                      className={
-                        formDataError.laptop_name ? "error-hint" : null
-                      }
-                    >
+                    <p className={formDataError.laptop_name && "error-hint"}>
                       ლათინური ასოები, ციფრები, !@#$%^&*()_+={" "}
                     </p>
                   </div>
@@ -494,7 +488,7 @@ function List() {
                       />
                       <p
                         className={
-                          formDataError.laptop_cpu_cores ? "error-hint" : null
+                          formDataError.laptop_cpu_cores && "error-hint"
                         }
                       >
                         მხოლოდ ციფრები
@@ -520,7 +514,7 @@ function List() {
                       />
                       <p
                         className={
-                          formDataError.laptop_cpu_threads ? "error-hint" : null
+                          formDataError.laptop_cpu_threads && "error-hint"
                         }
                       >
                         მხოლოდ ციფრები
@@ -544,11 +538,7 @@ function List() {
                         onChange={handleChange}
                         className={formDataError.laptop_ram ? "error" : null}
                       />
-                      <p
-                        className={
-                          formDataError.laptop_ram ? "error-hint" : null
-                        }
-                      >
+                      <p className={formDataError.laptop_ram && "error-hint"}>
                         მხოლოდ ციფრები
                       </p>
                     </div>
@@ -595,11 +585,7 @@ function List() {
                       className={formDataError.laptop_price ? "error" : null}
                       placeholder="₾"
                     />
-                    <p
-                      className={
-                        formDataError.laptop_price ? "error-hint" : null
-                      }
-                    >
+                    <p className={formDataError.laptop_price && "error-hint"}>
                       მხოლოდ ციფრები
                     </p>
                   </div>

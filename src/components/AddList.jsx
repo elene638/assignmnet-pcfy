@@ -83,7 +83,6 @@ function AddList() {
     localStorage.setItem("formData", JSON.stringify(formData));
     localStorage.setItem("team", JSON.stringify(team));
     localStorage.setItem("position", JSON.stringify(position));
-    console.log(formData.name);
   }
 
   function handleSubmit(event) {

@@ -41,13 +41,12 @@ input:hover::placeholder {
 }
 
 .price input::placeholder {
-  /* width: 18px;
-  height: 21px; */
-  /* opacity: 0; */
-  /* padding-right: 500px; */
-  /* padding-left: 70px; */
   float: right;
   padding-top: 15px;
+}
+
+.price label {
+  margin-top: 20px;
 }
 
 @media only screen and (min-width: 1300px) {
@@ -64,6 +63,10 @@ input:hover::placeholder {
     flex-direction: column;
     align-items: center;
   }
+
+  .price label {
+    margin-top: 0px;
+  }
 }
 
 .picture-error-phone {
@@ -71,12 +74,13 @@ input:hover::placeholder {
 
   background-color: #fff1f1;
   border-radius: 8px;
-  height: 244px;
-  width: 358px;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 948px;
+
+  width: 100%;
+  height: 250px;
 }
 
 .error-hint {
@@ -107,8 +111,6 @@ input:hover::placeholder {
     margin-top: 30px;
   }
 }
-
-/* if without hint label is #000000 */
 
 /* home page */
 
@@ -173,14 +175,6 @@ input:hover::placeholder {
   margin-top: 16px;
 }
 
-/* .computer-picture {
-  background: url("../src/images/home-picture.png");
-  background-repeat: no-repeat;
-  height: 200;
-  width: 200;
-  background-size: 200px 200px;
-} */
-
 @media only screen and (min-width: 1300px) {
   .computer {
     height: 482px;
@@ -223,7 +217,7 @@ input:hover::placeholder {
 
 .header {
   display: flex;
-  /* justify-content: space-between; */
+
   align-items: center;
   flex-direction: row;
   background-color: #ebebeb;
@@ -237,12 +231,10 @@ input:hover::placeholder {
 }
 
 .text {
-  /* font-family: myfont; */
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  /* identical to box height */
 
   text-align: center;
 
@@ -250,7 +242,6 @@ input:hover::placeholder {
 }
 
 .pages {
-  /* font-family: "myfont"; */
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -295,9 +286,8 @@ input:hover::placeholder {
 }
 
 label {
-  /* width: 358px; */
   height: 21px;
-  /* font-family: "myfont"; */
+
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -326,7 +316,7 @@ input {
   height: 60px;
   background: #ebebeb;
   border-radius: 8px;
-  /* font-family: "myfont"; */
+
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -376,8 +366,7 @@ input {
 
 .dropdown-btn {
   display: flex;
-  /* justify-content: center; */
-  /* align-content: center; */
+
   align-items: center;
   justify-content: space-between;
   /* width: 855px; */
@@ -398,7 +387,6 @@ input {
   padding: 3px;
   height: 3px;
   width: 6px;
-  /* margin-left: 54rem; */
 }
 
 .down {
@@ -407,15 +395,18 @@ input {
   margin-bottom: 5px;
 }
 .form p {
-  /* font-family: "myfont"; */
   font-style: normal;
   font-weight: 300;
   font-size: 14px;
   line-height: 21px;
   display: flex;
   align-items: center;
-  color: #2e2e2e;
+
   margin-top: 5px;
+}
+
+p {
+  color: #2e2e2e;
 }
 
 .next-page,
@@ -461,8 +452,7 @@ upload-file:focus {
   }
   .desktop {
     background-color: #f6f6f6;
-    /* display: block; */
-    /* margin: auto; */
+
     display: flex;
     justify-content: center;
     height: 1327px;
@@ -495,20 +485,12 @@ upload-file:focus {
   .center {
     margin: auto;
   }
-  /* .center {
-    width: 90vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-  } */
 
   .form {
     border-radius: 18px;
     height: 973px;
     width: 1226px;
-    /* padding: 88px 174px 0px 174px;*/
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -581,11 +563,6 @@ upload-file:focus {
   .phone-validation {
     margin-bottom: 95px;
   }
-
-  /* .next-page {
-    position: absolute;
-    right: 521px;
-  } */
 }
 
 /* list */
@@ -610,13 +587,9 @@ upload-file:focus {
 }
 
 .list-form {
-  /* height: 100%; */
   align-items: center;
   display: flex;
   flex-direction: column;
-  /* display: flex; */
-  /* position: absolute; */
-  /* bottom: 2rem; */
 }
 
 .choose-file-container {
@@ -776,12 +749,10 @@ input[type="file"] {
 }
 
 input[type="radio"] {
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
   appearance: none;
-  /* For iOS < 15 to remove gradient background */
   background-color: #fff;
-  /* Not removed via appearance */
+
   margin: 0;
 }
 
@@ -813,36 +784,6 @@ input[type="radio"]:checked::before {
   transform: scale(1);
 }
 
-/* input[type="radio"]:after {
-  width: 20px;
-  height: 20px;
-  border-radius: 15px;
-  /* top: -2px;
-  left: -1px; */
-/* position: relative;
-  background-color: white;
-
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid #4d9ac3; */
-/* } */
-
-/* input[type="radio"]:checked:after {
-  width: 12px;
-  height: 12px;
-  border-radius: 15px;
-  top: -2px;
-  left: -1px;
-  position: relative;
-  background-color: #4d9ac3;
-  content: "";
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid #4386a9;
-  /* margin: 4px; */
-/* } */
-
 .btn-container {
   margin-top: 83px;
 }
@@ -850,7 +791,7 @@ input[type="radio"]:checked::before {
 .back {
   background-color: transparent;
   border: transparent;
-  /* font-family: "myfont"; */
+
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -876,9 +817,6 @@ input[type="radio"]:checked::before {
   width: 85px;
 
   border-radius: 0px;
-
-  /* position: absolute;
-  bottom: 52; */
 }
 
 .phone-size-text {
@@ -934,15 +872,11 @@ input[type="radio"]:checked::before {
     align-items: center;
   }
 
-  /* input[type="file"] {
-    opacity: ;
-  } */
-
   .upload-file {
     height: 60px;
     width: 233px;
     padding: 18px 60px 18px 60px;
-    /* font-family: "myfont"; */
+
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -951,7 +885,6 @@ input[type="radio"]:checked::before {
     color: #ffffff;
     background: #62a1eb;
     border-radius: 8px;
-    /* z-index: 2; */
   }
 
   .span {
@@ -977,7 +910,6 @@ input[type="radio"]:checked::before {
   }
 
   .photo-label p {
-    /* font-family: "myfont"; */
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
@@ -1277,6 +1209,7 @@ header {
 
 .laptop-container {
   align-self: center;
+  margin-bottom: 51px;
 }
 
 .see-laptop {
@@ -1292,7 +1225,7 @@ header {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
-  /* justify-content: space-between; */
+
   align-items: center;
 }
 
@@ -1336,10 +1269,6 @@ header {
   header {
     margin-bottom: 97px;
   }
-
-  /* .laptop-list {
-    margin-right: 470px;
-  } */
 
   .laptop-list p {
     font-weight: 700;
@@ -1386,6 +1315,7 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
+    margin-bottom: 168px;
   }
 
   .see-more {
@@ -1399,8 +1329,8 @@ header {
 /* each laptop */
 
 .eachlaptop-container {
-  width: 550px;
   margin: auto;
+  width: 100vw;
 }
 
 .main-laptop {
@@ -1416,7 +1346,7 @@ header {
 }
 
 .laptop-information img {
-  width: 577px;
+  width: 342px;
   height: 342px;
   margin: 0px 16px 0px 16px;
 }
@@ -1424,16 +1354,12 @@ header {
 .information {
   display: flex;
   flex-direction: column;
-  /* width: 358px; */
-  width: 450px;
-  margin-left: 25px;
+  width: 358px;
+
   margin-top: 29px;
 }
 
 .details {
-  /* display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr; */
   display: flex;
   justify-content: space-between;
 }
@@ -1454,8 +1380,8 @@ header {
 
 .eachlaptop-hr {
   border: 1px solid #a5a5a5;
-  /* width: 358px; */
-  width: 450px;
+  width: 358px;
+  /* width: 450px; */
   margin: 23px 0px;
 }
 
@@ -1477,7 +1403,7 @@ header {
   .laptop-information {
     width: 577px;
     height: 342px;
-    padding-bottom: 150px;
+    /* padding-bottom: 150px; */
   }
 
   .details-desktop {
@@ -1525,8 +1451,6 @@ header {
   }
 
   .third-part-information {
-    /* display: grid;
-    grid-template-columns: 1fr 1fr; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;

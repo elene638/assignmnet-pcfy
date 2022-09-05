@@ -1,18 +1,8 @@
-import React, { useEffect, useState } from "react";
-import img from "../images/camera.png";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function Laptop({ laptopName, userName, userSurname, laptopImage, id }) {
   const navigate = useNavigate();
-  //const [eachLaptop, setEachLaptop] = useState();
-
-  //navigate("/eachLaptop");
-
-  // function fetchPositions() {
-  //   fetch(`https://pcfy.redberryinternship.ge/api//laptop/${id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }
 
   function handleClick() {
     fetch(
