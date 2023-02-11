@@ -73,6 +73,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ## Deploy to Netlify
 
-The app can be deployed to Netlify. Click [here](https://master--super-cucurucho-d52e72.netlify.app/) to successfully deploy the app.
+The app can be deployed to Netlify. Click [here](https://master--superlative-puppy-6bf3ff.netlify.app/) to successfully deploy the app.
 
 ---
